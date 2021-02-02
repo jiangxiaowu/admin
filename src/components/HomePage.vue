@@ -11,6 +11,7 @@
                 icon="text-left"
                 font-scale="1.5"
                 variant="primary"
+                shift-v="-3"
                 @click="isCollapse = !isCollapse"
               ></b-icon>
             </b-navbar-brand>
@@ -20,13 +21,15 @@
           <b-nav-item>
             <b-navbar-brand class="header-title-icon">
               <b-icon
-                icon="circle"
+                icon="bicycle"
                 font-scale="1.3"
-                variant="primary"
+                variant="info"
+                rotate="45"
+                animation="spin"
                 class="mr-2"
                 shift-v="-1"
               ></b-icon
-              >ERP系统
+              >Admin
             </b-navbar-brand>
           </b-nav-item>
         </b-navbar-nav>
@@ -47,7 +50,7 @@
           </b-nav-form>
 
           <!-- 菜单按钮 -->
-          <b-nav-item-dropdown text="菜单">
+          <b-nav-item-dropdown ml-2 text="菜单">
             <b-container fluid>
               <b-row class="list-row">
                 <b-col style="background-color: #3f80ea"
@@ -89,7 +92,6 @@
                 aria-hidden="true"
                 variant="primary"
                 font-scale="1"
-                shift-v="-1"
               ></b-icon>
             </template>
             <!-- 新增按钮下拉后的内容 -->
@@ -106,7 +108,7 @@
           <!-- 帮助中心按钮 -->
           <b-nav-item-dropdown>
             <template #button-content>
-              <b-icon icon="question-circle-fill" shift-v="-1" variant="primary"></b-icon>
+              <b-icon icon="question-circle-fill" variant="primary"></b-icon>
               帮助中心
             </template>
             <b-dropdown-item href="#">帮助一</b-dropdown-item>
@@ -118,7 +120,7 @@
           <!-- 我的消息按钮 -->
           <b-nav-item-dropdown>
             <template #button-content>
-              <b-icon icon="bell-fill" shift-v="-1" variant="primary"></b-icon>
+              <b-icon icon="bell-fill" variant="primary"></b-icon>
               我的消息
             </template>
             <b-dropdown-item href="#">消息1</b-dropdown-item>
@@ -130,13 +132,13 @@
           <!-- 管理员按钮 -->
           <b-nav-item-dropdown>
             <template #button-content>
-              <b-icon icon="person-fill" shift-v="-1" variant="primary"></b-icon>
-              您好，系统管理员
+              <b-icon icon="person-fill" variant="primary"></b-icon>
+              我的账户
             </template>
-            <b-dropdown-item href="#">管理员1</b-dropdown-item>
+            <b-dropdown-item href="#">个人资料</b-dropdown-item>
             <b-dropdown-item href="#">管理员2</b-dropdown-item>
-            <b-dropdown-item href="#">管理员3</b-dropdown-item>
-            <b-dropdown-item href="#">管理员4</b-dropdown-item>
+            <b-dropdown-item href="#">切换账号</b-dropdown-item>
+            <b-dropdown-item href="#" @click="onLayout">退出登录</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
       </b-collapse>
@@ -202,6 +204,11 @@ export default {
     };
   },
   methods: {
+    onLayout(event) {
+      event.preventDefault();
+      this.$router.push("/");
+    },
+
     handleOpen(key, keyPath) {
       console.log(key, keyPath);
     },
@@ -211,6 +218,9 @@ export default {
     search: function () {
       alert("Hello!");
     },
+  },
+  beforeCreate() {
+    // const sessionToken = sessionStorage.getItem(this.$KEY_SESSION_TOKEN);
   },
 };
 </script>
