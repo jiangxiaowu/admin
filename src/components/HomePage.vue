@@ -50,7 +50,7 @@
           </b-nav-form>
 
           <!-- 菜单按钮 -->
-          <b-nav-item-dropdown ml-2 text="菜单">
+          <b-nav-item-dropdown ml-2 text="Menu">
             <b-container fluid>
               <b-row class="list-row">
                 <b-col style="background-color: #3f80ea"
@@ -109,7 +109,7 @@
           <b-nav-item-dropdown>
             <template #button-content>
               <b-icon icon="question-circle-fill" variant="primary"></b-icon>
-              帮助中心
+              Help Center
             </template>
             <b-dropdown-item href="#">帮助一</b-dropdown-item>
             <b-dropdown-item href="#">帮助二</b-dropdown-item>
@@ -121,7 +121,7 @@
           <b-nav-item-dropdown>
             <template #button-content>
               <b-icon icon="bell-fill" variant="primary"></b-icon>
-              我的消息
+              Message
             </template>
             <b-dropdown-item href="#">消息1</b-dropdown-item>
             <b-dropdown-item href="#">消息2</b-dropdown-item>
@@ -130,15 +130,15 @@
           </b-nav-item-dropdown>
 
           <!-- 管理员按钮 -->
-          <b-nav-item-dropdown>
+          <b-nav-item-dropdown id="dropdown-right" right text="Right align">
             <template #button-content>
               <b-icon icon="person-fill" variant="primary"></b-icon>
-              我的账户
+              User
             </template>
             <b-dropdown-item href="#">个人资料</b-dropdown-item>
             <b-dropdown-item href="#">管理员2</b-dropdown-item>
             <b-dropdown-item href="#">切换账号</b-dropdown-item>
-            <b-dropdown-item href="#" @click="onLayout">退出登录</b-dropdown-item>
+            <b-dropdown-item @click.prevent="Logout">退出登录</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
       </b-collapse>
@@ -173,7 +173,7 @@
         </el-submenu>
         <el-menu-item index="2">
           <i class="el-icon-menu"></i>
-          <span slot="title">导航二</span>
+          <span slot="title">Card</span>
         </el-menu-item>
         <el-menu-item index="3">
           <i class="el-icon-document"></i>
@@ -204,9 +204,8 @@ export default {
     };
   },
   methods: {
-    onLayout(event) {
-      event.preventDefault();
-      this.$router.push("/");
+    Logout() {
+      this.$router.push("/logout");
     },
 
     handleOpen(key, keyPath) {

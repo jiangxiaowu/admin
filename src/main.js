@@ -59,6 +59,7 @@ async function isAuthenticated() {
     });
 }
 
+
 window.vm = new Vue({
     router,
     render: (h) => h(App),
