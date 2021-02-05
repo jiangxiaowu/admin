@@ -17,7 +17,7 @@
                   id="input-1"
                   v-model="form.name"
                   type="text"
-                  placeholder="Enter name"
+                  placeholder="Enter Name"
                   required
                 ></b-form-input>
               </b-form-group>
@@ -53,7 +53,7 @@
                   id="input-1"
                   type="text"
                   v-model="form.name"
-                  placeholder="Enter name"
+                  placeholder="Enter Name"
                   required
                 ></b-form-input>
               </b-form-group>

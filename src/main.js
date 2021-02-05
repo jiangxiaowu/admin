@@ -43,22 +43,15 @@ router.beforeEach((to, from, next) => {
     else next();
 });
 
-async function isAuthenticated() {
+function isAuthenticated() {
     const currentUser = AV.User.current();
-    if (currentUser === null) {
+    if (currentUser === null || currentUser.isAnonymous()) {
         return false;
     }
-    return await currentUser.isAuthenticated().then((authenticated) => {
-        if (authenticated) {
-            // session token 有效
-            return true;
-        } else {
-            // session token 无效
-            return false;
-        }
-    });
+    return true;
 }
 
+console.log(isAuthenticated());
 
 window.vm = new Vue({
     router,
