@@ -120,6 +120,7 @@ export default {
         (error) => {
           // 登录失败（可能是密码错误）
           console.log(error);
+          alert("登陆失败,请稍后尝试。");
         }
       );
     },

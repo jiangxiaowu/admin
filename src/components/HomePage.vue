@@ -39,10 +39,17 @@
           <!-- 搜索框 -->
           <b-nav-form>
             <b-input-group>
-              <b-form-input placeholder="Search" class="navbar-search"></b-form-input>
+              <b-form-input
+                placeholder="Search"
+                class="navbar-search"
+              ></b-form-input>
 
               <b-input-group-append>
-                <b-button variant="link" class="navbar-search" style="color: #ccc">
+                <b-button
+                  variant="link"
+                  class="navbar-search"
+                  style="color: #ccc"
+                >
                   <b-icon icon="search" @click="search"
                 /></b-button>
               </b-input-group-append>
@@ -92,6 +99,7 @@
                 aria-hidden="true"
                 variant="primary"
                 font-scale="1"
+                shift-v="0"
               ></b-icon>
             </template>
             <!-- 新增按钮下拉后的内容 -->
@@ -151,7 +159,7 @@
         @open="handleOpen"
         @close="handleClose"
         :collapse="isCollapse"
-        :collapse-transition="false"
+        :collapse-transition="true"
       >
         <el-submenu index="1">
           <template slot="title">
@@ -185,12 +193,27 @@
         </el-menu-item>
       </el-menu>
 
-      <b-row>
-        <b-col cols="9" style="min-width: 500px">
-          <b-row style="background-color: #6cc; height: 200px">Left Up </b-row>
-          <b-row style="background-color: #66c; height: 600px"> Left Down</b-row>
+      <b-row style="background-color:#ccc">
+        <b-col>
+          <!-- <b-row style="background-color: #6cc; height: 200px">Left Up </b-row> -->
+          <ul>
+            <li v-for="(item, index) in items" :key="index" style="float:left">
+              <b-card
+                :title="items[index].attributes.name"
+                :img-src="items[index].attributes.image.attributes.url"
+                :img-alt="items[index].attributes.image_format"
+                :camera="items[index].attributes.camera"
+                img-top
+                tag="article"
+                style="max-width: 20rem;"
+                class="ml-2 mt-2"
+              >
+                <!-- <h5>camera: </h5> -->
+              </b-card>
+            </li>
+          </ul>
         </b-col>
-        <b-col cols="3" style="background-color: #ccc">Right</b-col>
+        <!-- <b-col cols="3" style="background-color: #ccc">Right</b-col> -->
       </b-row>
     </div>
   </div>
@@ -200,7 +223,9 @@
 export default {
   data() {
     return {
-      isCollapse: false,
+      // 导航栏是否默认折叠or展开
+      isCollapse: true,
+      items: [],
     };
   },
   methods: {
@@ -210,16 +235,32 @@ export default {
 
     handleOpen(key, keyPath) {
       console.log(key, keyPath);
+      console.log(1);
     },
     handleClose(key, keyPath) {
       console.log(key, keyPath);
+      console.log(2);
     },
-    search: function () {
+    search: function() {
       alert("Hello!");
     },
   },
   beforeCreate() {
     // const sessionToken = sessionStorage.getItem(this.$KEY_SESSION_TOKEN);
+  },
+  mounted() {
+    const query = new this.$AV.Query("Document");
+
+    query
+      .find()
+      .then((items) => {
+        // const name = todo.get('name');
+        this.items = items;
+        console.log(this.items[0].attributes);
+      })
+      .catch((e) => {
+        console.error(e);
+      });
   },
 };
 </script>
