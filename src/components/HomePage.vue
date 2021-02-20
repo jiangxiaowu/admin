@@ -24,10 +24,9 @@
                 icon="bicycle"
                 font-scale="1.3"
                 variant="info"
-                rotate="45"
-                animation="spin"
+                rotate="15"
                 class="mr-2"
-                shift-v="-1"
+                shift-v="1"
               ></b-icon
               >Admin
             </b-navbar-brand>
@@ -155,11 +154,13 @@
       <!-- 侧边导航栏 -->
 
       <el-menu
+        :default-active="this.$route.path"
         class="el-menu-vertical"
         @open="handleOpen"
         @close="handleClose"
         :collapse="isCollapse"
         :collapse-transition="true"
+        router
       >
         <el-submenu index="1">
           <template slot="title">
@@ -179,42 +180,20 @@
             <el-menu-item index="1-4-1">选项1</el-menu-item>
           </el-submenu>
         </el-submenu>
-        <el-menu-item index="2">
+        <el-menu-item index="/cardpage">
           <i class="el-icon-menu"></i>
           <span slot="title">Card</span>
         </el-menu-item>
-        <el-menu-item index="3">
+        <el-menu-item index="/tablepage">
           <i class="el-icon-document"></i>
-          <span slot="title">导航三</span>
+          <span slot="title">Table</span>
         </el-menu-item>
         <el-menu-item index="4">
           <i class="el-icon-setting"></i>
           <span slot="title">导航四</span>
         </el-menu-item>
       </el-menu>
-
-      <b-row style="background-color:#ccc">
-        <b-col>
-          <!-- <b-row style="background-color: #6cc; height: 200px">Left Up </b-row> -->
-          <ul>
-            <li v-for="(item, index) in items" :key="index" style="float:left">
-              <b-card
-                :title="items[index].attributes.name"
-                :img-src="items[index].attributes.image.attributes.url"
-                :img-alt="items[index].attributes.image_format"
-                :camera="items[index].attributes.camera"
-                img-top
-                tag="article"
-                style="max-width: 20rem;"
-                class="ml-2 mt-2"
-              >
-                <!-- <h5>camera: </h5> -->
-              </b-card>
-            </li>
-          </ul>
-        </b-col>
-        <!-- <b-col cols="3" style="background-color: #ccc">Right</b-col> -->
-      </b-row>
+      <router-view></router-view>
     </div>
   </div>
 </template>
@@ -225,67 +204,29 @@ export default {
     return {
       // 导航栏是否默认折叠or展开
       isCollapse: true,
-      items: [],
     };
   },
   methods: {
     Logout() {
       this.$router.push("/logout");
     },
-
     handleOpen(key, keyPath) {
       console.log(key, keyPath);
-      console.log(1);
     },
     handleClose(key, keyPath) {
       console.log(key, keyPath);
-      console.log(2);
     },
     search: function() {
       alert("Hello!");
     },
   },
-  beforeCreate() {
-    // const sessionToken = sessionStorage.getItem(this.$KEY_SESSION_TOKEN);
-  },
-  mounted() {
-    const query = new this.$AV.Query("Document");
-
-    query
-      .find()
-      .then((items) => {
-        // const name = todo.get('name');
-        this.items = items;
-        console.log(this.items[0].attributes);
-      })
-      .catch((e) => {
-        console.error(e);
-      });
-  },
 };
 </script>
 
 <style scoped>
-/* 字体 */
 * {
   font-size: 10pt;
 }
-h1 {
-  font-size: 1.5em;
-}
-h2 {
-  font-size: 1.3em;
-}
-h3 {
-  font-size: 1.2em;
-}
-h4 {
-  font-size: 1.1em;
-}
-h5 {
-  font-size: 1em;
-}
-
 /* header 标题+图标 */
 .header-title-icon {
   font-size: 20px;

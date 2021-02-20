@@ -7,7 +7,18 @@ Vue.use(VueRouter)
 const routes = [{
         path: '/',
         name: 'Home',
-        component: Home
+        component: Home,
+        children: [{
+            path: 'tablepage',
+            name: 'table',
+            component: () =>
+                import ( /* webpackChunkName: "about" */ '../views/Tablepage.vue')
+        }, {
+            path: 'cardpage',
+            name: 'cards',
+            component: () =>
+                import ( /* webpackChunkName: "about" */ '../views/Cardpage.vue')
+        }]
     },
     {
         path: '/login',
@@ -30,9 +41,9 @@ const routes = [{
     // {
     //     path: '/signup',
     //     name: 'Signup',
-    //     // route level code-splitting
-    //     // this generates a separate chunk (about.[hash].js) for this route
-    //     // which is lazy-loaded when the route is visited.
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
     //     component: () =>
     //         import ( /* webpackChunkName: "about" */ '../views/Signup.vue')
     // }

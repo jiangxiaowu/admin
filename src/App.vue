@@ -14,5 +14,22 @@
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+ 
+}
+/* 字体 */
+h1 {
+  font-size: 0.5em;
+}
+h2 {
+  font-size: 0.5em;
+}
+h3 {
+  font-size: 0.5em;
+}
+h4 {
+  font-size: 0.5em;
+}
+h5 {
+  font-size: 0.5em;
 }
 </style>
