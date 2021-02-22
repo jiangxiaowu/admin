@@ -6,7 +6,7 @@
 
         <!-- login -->
         <b-col cols="4" class="loginfromgroup" v-if="isShow">
-          <b-card bg-variant="light">
+          <b-card bg-variant="light" style="min-width: 340px;">
             <h2>Login</h2>
             <b-form @submit.prevent="onSubmit">
               <b-form-group
@@ -45,9 +45,9 @@
 
         <!-- signup -->
         <b-col cols="4" class="signupfromgroup" v-else>
-          <b-card bg-variant="light">
+          <b-card bg-variant="light" style="min-width: 340px;">
             <h2 style="text-align: center">Signup</h2>
-            <b-form @submit.prevent="onSignup" class="fromgroupsubmit">
+            <b-form @submit.prevent="onSignup">
               <b-form-group label="User Name:">
                 <b-form-input
                   id="input-1"
@@ -113,8 +113,6 @@ export default {
       this.$AV.User.logIn(this.form.name, this.form.password).then(
         () => {
           // 登录成功
-          // console.log(user._sessionToken);
-          // sessionStorage.setItem(this.$KEY_SESSION_TOKEN, user._sessionToken);
           this.$router.push("/");
         },
         (error) => {
@@ -152,15 +150,6 @@ export default {
       }
     },
   },
-  // mounted() {
-  //   const TestObject = this.$AV.Object.extend("TestObject");
-  //   const testObject = new TestObject();
-  //   testObject.set("words", "Hello world!");
-  //   testObject.save().then((testObject) => {
-  //     console.log("保存成功。");
-  //     console.log(testObject);
-  //   });
-  // },
 };
 </script>
 
@@ -176,6 +165,7 @@ h2 {
 
 .loginfromgroup,
 .signupfromgroup {
+
   top: 200px;
   padding: 20px;
   opacity: 0.8;
@@ -183,6 +173,7 @@ h2 {
 
 .submitButton,
 .registerButton {
+
   width: 298px;
   height: 45px;
 }
