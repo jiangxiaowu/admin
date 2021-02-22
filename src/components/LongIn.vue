@@ -113,7 +113,7 @@ export default {
       this.$AV.User.logIn(this.form.name, this.form.password).then(
         () => {
           // 登录成功
-          this.$router.push("/");
+          this.$router.push("/cardpage");
         },
         (error) => {
           // 登录失败（可能是密码错误）
