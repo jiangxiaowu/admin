@@ -1,35 +1,34 @@
 <template>
   <b-row style="background-color:#ccc">
     <b-col>
-        <waterfall
-          :line-gap="300"
-          :watch="items"
-          :min-line-gap="200"
-          :max-line-gap="220"
-          :single-max-width="300"
-          ref="waterfall"
+      <waterfall
+        :line-gap="400"
+        :watch="items"
+        :min-line-gap="200"
+        :max-line-gap="220"
+        :single-max-width="300"
+        ref="waterfall"
+      >
+        <!-- each component is wrapped by a waterfall slot -->
+        <waterfall-slot
+          v-for="(item, index) in items"
+          :width="item.width"
+          :height="item.height"
+          :order="index"
+          :key="item.id"
         >
-          <!-- each component is wrapped by a waterfall slot -->
-          <waterfall-slot
-            v-for="(item, index) in items"
-            :width="item.width"
-            :height="item.height"
-            :order="index"
-            :key="item.id"
+          <b-card
+            :title="items.name"
+            :img-src="item.image.attributes.url"
+            :img-alt="item.image_format"
+            :camera="item.camera"
+            img-top
+            tag="article"
+            class="ml-2 mt-2"
           >
-            <b-card
-              :title="items.name"
-              :img-src="item.image.attributes.url"
-              :img-alt="item.image_format"
-              :camera="item.camera"
-              img-top
-              tag="article"
-              class="ml-2 mt-2"
-            >
-            </b-card>
-          </waterfall-slot>
-        </waterfall>
-   
+          </b-card>
+        </waterfall-slot>
+      </waterfall>
     </b-col>
     <!-- <b-col cols="3" style="background-color: #ccc">Right</b-col> -->
   </b-row>
@@ -52,12 +51,12 @@ export default {
   mounted() {
     const query = new this.$AV.Query("Document");
     query
-      .skip(20)
+      .limit(20)
       .find()
       .then((data) => {
         // const name = todo.get('name');
-        var items=[];
-        for(var row of data){
+        var items = [];
+        for (var row of data) {
           items.push(row._serverData);
         }
         this.items = items;
@@ -70,7 +69,7 @@ export default {
 </script>
 
 <style scoped>
-h4{
+h4 {
   font-size: 1rem;
 }
 </style>

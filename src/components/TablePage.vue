@@ -1,9 +1,18 @@
 <template>
   <div>
     <b-row>
-      <b-table outlined hover :items="items" :fields="fields" class="table">
+      <b-table
+        outlined
+        hover
+        :items="items"
+        :fields="fields"
+        id="my-table"
+        :per-page="perPage"
+        :current-page="currentPage"
+      >
         <template #cell(index)="data">
-          {{ data.index + 1 }}
+          <!-- {{ data.index * (currentPage - 1) }} -->
+          {{perPage * (currentPage - 1) + 1 + data.index }}        
         </template>
         <template #cell(picture)="data">
           <div class="picture">
@@ -14,6 +23,15 @@
           {{ data.item.category }}
         </template>
       </b-table>
+
+      <b-pagination
+        v-model="currentPage"
+        :total-rows="rows"
+        :per-page="perPage"
+        aria-controls="my-table"
+        class="pagination"
+        align="right"
+      ></b-pagination>
     </b-row>
   </div>
 </template>
@@ -22,6 +40,8 @@
 export default {
   data() {
     return {
+      perPage: 7,
+      currentPage: 1,
       fields: [
         { key: "index", label: "ID" },
         { key: "picture", label: "Image" },
@@ -32,10 +52,16 @@ export default {
       items: [],
     };
   },
+  computed: {
+    rows() {
+      return this.items.length;
+    },
+  },
   mounted() {
     const query = new this.$AV.Query("Document");
     query
-      .skip(20)
+      .limit(100)
+
       .find()
       .then((data) => {
         var items = [];
@@ -52,7 +78,8 @@ export default {
 </script>
 
 <style scoped>
-.table {
+#my-table,
+.pagination {
   margin: 20px;
 }
 .picture {
