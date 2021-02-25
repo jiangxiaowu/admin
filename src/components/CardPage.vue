@@ -48,22 +48,26 @@ export default {
     Waterfall,
     WaterfallSlot,
   },
+  methods: {
+    getCardData() {
+      new this.$AV.Query("Document")
+        .limit(20)
+        .find()
+        .then((data) => {
+          // const name = todo.get('name');
+          var items = [];
+          for (var row of data) {
+            items.push(row._serverData);
+          }
+          this.items = items;
+        })
+        .catch((e) => {
+          console.error(e);
+        });
+    },
+  },
   mounted() {
-    const query = new this.$AV.Query("Document");
-    query
-      .limit(20)
-      .find()
-      .then((data) => {
-        // const name = todo.get('name');
-        var items = [];
-        for (var row of data) {
-          items.push(row._serverData);
-        }
-        this.items = items;
-      })
-      .catch((e) => {
-        console.error(e);
-      });
+    this.getCardData();
   },
 };
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <b-container fluid>
     <b-row>
       <b-table
         outlined
@@ -11,8 +11,7 @@
         :current-page="currentPage"
       >
         <template #cell(index)="data">
-          <!-- {{ data.index * (currentPage - 1) }} -->
-          {{perPage * (currentPage - 1) + 1 + data.index }}        
+          {{ perPage * (currentPage - 1) + 1 + data.index + skip }}
         </template>
         <template #cell(picture)="data">
           <div class="picture">
@@ -23,25 +22,26 @@
           {{ data.item.category }}
         </template>
       </b-table>
-
-      <b-pagination
-        v-model="currentPage"
-        :total-rows="rows"
-        :per-page="perPage"
-        aria-controls="my-table"
-        class="pagination"
-        align="right"
-      ></b-pagination>
     </b-row>
-  </div>
+    <b-pagination
+      @page-click="onPageClick"
+      :total-rows="totalRows"
+      :per-page="perPage"
+      aria-controls="my-table"
+      class="pagination"
+      align="left"
+    ></b-pagination>
+  </b-container>
 </template>
 
 <script>
 export default {
   data() {
     return {
-      perPage: 7,
+      perPage: 6,
       currentPage: 1,
+      totalRows: 0,
+      skip: 0,
       fields: [
         { key: "index", label: "ID" },
         { key: "picture", label: "Image" },
@@ -52,35 +52,51 @@ export default {
       items: [],
     };
   },
-  computed: {
-    rows() {
-      return this.items.length;
+  methods: {
+    onPageClick(bvEvent, page) {
+      const skip = this.perPage * (page - 1);
+      this.getTableData(skip);
+      this.skip = skip;
+    },
+
+    getTotalRows() {
+      new this.$AV.Query("Document").count().then((count) => {
+        this.totalRows = count;
+      });
+    },
+    getTableData(skip) {
+      skip = skip || 0;
+
+      new this.$AV.Query("Document")
+        .skip(skip)
+        .limit(this.perPage)
+        .find()
+        .then((data) => {
+          var items = [];
+          for (var row of data) {
+            items.push(row._serverData);
+          }
+          this.items = items;
+        })
+        .catch((e) => {
+          console.error(e);
+        });
     },
   },
   mounted() {
-    const query = new this.$AV.Query("Document");
-    query
-      .limit(100)
-
-      .find()
-      .then((data) => {
-        var items = [];
-        for (var row of data) {
-          items.push(row._serverData);
-        }
-        this.items = items;
-      })
-      .catch((e) => {
-        console.error(e);
-      });
+    this.getTotalRows();
+    this.getTableData();
   },
 };
 </script>
 
 <style scoped>
-#my-table,
-.pagination {
+#my-table {
   margin: 20px;
+}
+.pagination {
+  padding-left: 20px;
+  position: relative;
 }
 .picture {
   text-align: center;

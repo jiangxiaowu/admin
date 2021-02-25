@@ -267,7 +267,7 @@ export default {
 }
 
 .main {
-  height: 100vh;
+  height: 100%;
 }
 /* 菜单下拉框 */
 .list-row {
